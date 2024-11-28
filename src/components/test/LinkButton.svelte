@@ -18,7 +18,7 @@
 		text-align: center;
 		margin: 10px;
 		cursor: pointer;
-		padding: 0 30px 0 30px;
+		padding: 5px 30px 5px 30px;
 		border: none;
 		text-decoration: none;
 		/* display: block; */
