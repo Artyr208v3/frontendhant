@@ -1,13 +1,10 @@
 <script lang="ts">
 
-  let minutes: number = $state(0);
-  let seconds : number = $state(0);
+  let {little, minutes = $bindable(0), seconds = $bindable(0)}: {little: boolean, minutes: number, seconds: number} = $props();
 
-  let {little, counter = $bindable() }: {little: boolean, counter: {minutes: number, seconds: number}} = $props();
-
-  function updateCounter() {
-     counter = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;   
-  }
+  // function updateCounter() {
+  //    counter = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;   
+  // }
 
   function increment() {
     if (little) {
@@ -20,7 +17,7 @@
       minutes += 1;
     }
 
-    updateCounter();
+    // updateCounter();
   }
 
   function decrement() {
@@ -34,10 +31,8 @@
       seconds = 0;
     }
 
-    updateCounter();
+    // updateCounter();
   }
-
-
 
 
 </script>
@@ -47,7 +42,7 @@
         <path d="M1.13286e-07 8.5L14.25 0.272759L14.25 16.7272L1.13286e-07 8.5Z" fill="#EB7445"/>
         </svg>        
 </button>
-<input type="text" name="" id="" disabled value={counter}>
+<p>{minutes < 10 ? '0' + minutes : minutes}:{seconds < 10 ? '0' + seconds : seconds}</p>
 <button aria-label="button" class="counter__minus" onclick={increment} disabled={minutes >= 30}> 
     <svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M15 8.5L0.75 16.7272V0.272759L15 8.5Z" fill="#EB7445"/>
@@ -75,19 +70,5 @@
         gap: 10px;
         position: relative;
         bottom: 40px;
-    }
-    input {
-      font-size: 16px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        padding: 0;
-        margin: 0;
-        width: 40px;
-        height: 30px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

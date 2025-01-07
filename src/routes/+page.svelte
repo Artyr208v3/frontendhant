@@ -5,12 +5,13 @@
 	import RulesModal from '../components/test/RulesModal.svelte';
 	import ConnectGameModal from '../components/test/ConnectGameModal.svelte';
 	const userRole: string = 'admin';
-	const isAuth: boolean = true;
+	let isAuth: boolean = $state(true);
 	let queueNewGameModal: boolean = $state(false);
 	let newgamemodalOpened = $state(false);
 	let rulesModalOpened = $state(false);
 	let regmodalOpened = $state(false);
 	let authModal = $state(false);
+	let gameOptions = $state({name: 'Игра 1', maxPlayers: 4, time: {minutes: 30, seconds: 0}, timeformove: { minutes: 1, seconds: 0 }, id: 0, spectate: false});
 	const links: Array<{ label: string; url?: string; adminOnly: boolean, noautentification?: boolean, typeModal?: string }> = [
 		{
 			url: '/gameList',
@@ -43,6 +44,11 @@
 			adminOnly: false,
 			noautentification: true,
 			typeModal: 'regmodalOpened'
+		},
+		{
+			url: '/userProfile',
+			label: 'Профиль',
+			adminOnly: false
 		}
 	];
 </script>
@@ -69,7 +75,7 @@
 	</div>
 </div>
 {#if newgamemodalOpened}
-	<NewGameModal onClose={() => (newgamemodalOpened = false)} onNewGameOpened={() => (queueNewGameModal = true)} />
+	<NewGameModal onClose={() => (newgamemodalOpened = false)} onNewGameOpened={() => (queueNewGameModal = true)} bind:gameOptions={gameOptions} />
 {/if}
 
 {#if regmodalOpened}
@@ -84,7 +90,7 @@
 	<RulesModal onClose={() => (rulesModalOpened = false)} />
 {/if}
 {#if queueNewGameModal}
-	<ConnectGameModal onClose={() => (queueNewGameModal = false)} gameOptions={gameOptions} />
+	<ConnectGameModal onClose={() => (queueNewGameModal = false)} gameOptions={gameOptions}  />
 {/if}
 
 <style>

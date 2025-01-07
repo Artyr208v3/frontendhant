@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ConnectGameModal from "../../components/test/ConnectGameModal.svelte";
+
     function onClose() {
         window.history.back();
     }
@@ -6,7 +8,7 @@
     function reloadPage () {
         window.location.reload();
     }
-    
+    let connectGameModalOpened = $state(false);
     const games: Array<{label: string, players: number, maxPlayers: number ,time: {minutes: number, seconds: number}, id: number, spectate: boolean} > = [
         {
             label: 'Игра 1',
@@ -66,8 +68,8 @@
         }
     ]
 
-   function openGameModal (id: number) {
-
+   function joinGame () {
+       connectGameModalOpened = true;
    }
     </script>
 
@@ -124,7 +126,7 @@
               <span class="stat-label">Длительность раунда</span>
               <span class="stat-value">{game.time.minutes}:{game.time.seconds}</span>
             </div>
-            <button class="join-button" type="button" >Войти в игру</button>
+            <button class="join-button" type="button" onclick={joinGame} >Войти в игру</button>
           </div>
           {#if game.spectate}
             <button class="spectator-button" type="button">Режим наблюдения</button>
@@ -134,7 +136,9 @@
       </article>  
     {/each}
 </div>
-
+{#if connectGameModalOpened} 
+    <ConnectGameModal  onClose={() => (connectGameModalOpened = false)} />
+{/if}
 </div>
 
 <style>
